@@ -1,4 +1,4 @@
-#MlLex and MlYacc
+# MlLex and MlYacc
 ## Dependencies
 * mlton compiler
 
