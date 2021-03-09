@@ -31,12 +31,12 @@ val table=let val actionRows =
 \\001\000\004\000\017\000\005\000\016\000\006\000\015\000\007\000\014\000\
 \\008\000\013\000\015\000\012\000\000\000\
 \\001\000\012\000\000\000\000\000\
-\\032\000\000\000\
+\\032\000\001\000\010\000\002\000\009\000\003\000\008\000\009\000\007\000\
+\\013\000\006\000\000\000\
 \\033\000\001\000\010\000\002\000\009\000\003\000\008\000\009\000\007\000\
 \\013\000\006\000\000\000\
 \\034\000\000\000\
-\\035\000\001\000\010\000\002\000\009\000\003\000\008\000\009\000\007\000\
-\\013\000\006\000\000\000\
+\\035\000\000\000\
 \\036\000\000\000\
 \\037\000\000\000\
 \\038\000\000\000\
@@ -63,8 +63,8 @@ val actionRowNumbers =
 val gotoT =
 "\
 \\001\000\003\000\002\000\029\000\003\000\002\000\004\000\001\000\000\000\
+\\001\000\003\000\003\000\009\000\000\000\
 \\000\000\
-\\001\000\003\000\003\000\002\000\004\000\009\000\000\000\
 \\000\000\
 \\001\000\016\000\000\000\
 \\001\000\017\000\000\000\
@@ -204,7 +204,7 @@ fn (i392,defaultPos,stack,
     (()):arg) =>
 case (i392,stack)
 of  ( 0, ( ( _, ( MlyValue.program program1, program1left, program1right)) :: rest671)) => let val  result = MlyValue.START (fn _ => let val  (program as program1) = program1 ()
- in ((*#line 35.17 "formula.yacc"*)print_program(program);print("\n\n"); SOME program(*#line 206.1 "formula.yacc.sml"*)
+ in ((*#line 35.17 "formula.yacc"*)print("["); print_program(program);print("]\n\n"); SOME program(*#line 206.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 1, ( result, program1left, program1right), rest671)
@@ -213,80 +213,80 @@ end
 ))
  in ( LrTable.NT 1, ( result, defaultPos, defaultPos), rest671)
 end
-|  ( 2, ( ( _, ( MlyValue.program program1, _, program1right)) :: ( _, ( MlyValue.statement statement1, statement1left, _)) :: rest671)) => let val  result = MlyValue.program (fn _ => let val  (statement as statement1) = statement1 ()
- val  (program as program1) = program1 ()
- in ((*#line 39.28 "formula.yacc"*)AST.Exp4(statement, program)(*#line 216.1 "formula.yacc.sml"*)
+|  ( 2, ( ( _, ( MlyValue.statement statement1, _, statement1right)) :: ( _, ( MlyValue.program program1, program1left, _)) :: rest671)) => let val  result = MlyValue.program (fn _ => let val  (program as program1) = program1 ()
+ val  (statement as statement1) = statement1 ()
+ in ((*#line 38.28 "formula.yacc"*)AST.Exp4(program, statement)(*#line 216.1 "formula.yacc.sml"*)
 )
 end)
- in ( LrTable.NT 3, ( result, statement1left, program1right), rest671)
+ in ( LrTable.NT 3, ( result, program1left, statement1right), rest671)
 end
 |  ( 3, ( ( _, ( MlyValue.statement statement1, statement1left, statement1right)) :: rest671)) => let val  result = MlyValue.program (fn _ => let val  (statement as statement1) = statement1 ()
- in ((*#line 40.15 "formula.yacc"*)AST.Exp5(statement)(*#line 223.1 "formula.yacc.sml"*)
+ in ((*#line 39.15 "formula.yacc"*)AST.Exp5(statement)(*#line 223.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 3, ( result, statement1left, statement1right), rest671)
 end
 |  ( 4, ( ( _, ( _, _, TERM1right)) :: ( _, ( MlyValue.formula formula1, formula1left, _)) :: rest671)) => let val  result = MlyValue.statement (fn _ => let val  (formula as formula1) = formula1 ()
- in ((*#line 41.27 "formula.yacc"*)AST.Exp3(formula, AST.TERM)(*#line 229.1 "formula.yacc.sml"*)
+ in ((*#line 40.27 "formula.yacc"*)AST.Exp3(formula, AST.TERM)(*#line 229.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 2, ( result, formula1left, TERM1right), rest671)
 end
 |  ( 5, ( ( _, ( MlyValue.CONST CONST1, CONST1left, CONST1right)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  (CONST as CONST1) = CONST1 ()
- in ((*#line 43.19 "formula.yacc"*)AST.CONST(CONST)(*#line 235.1 "formula.yacc.sml"*)
+ in ((*#line 42.19 "formula.yacc"*)AST.CONST(CONST)(*#line 235.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, CONST1left, CONST1right), rest671)
 end
 |  ( 6, ( ( _, ( MlyValue.ID ID1, ID1left, ID1right)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  (ID as ID1) = ID1 ()
- in ((*#line 44.9 "formula.yacc"*)AST.ID(ID)(*#line 241.1 "formula.yacc.sml"*)
+ in ((*#line 43.9 "formula.yacc"*)AST.ID(ID)(*#line 241.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, ID1left, ID1right), rest671)
 end
 |  ( 7, ( ( _, ( _, _, RPAREN1right)) :: ( _, ( MlyValue.formula formula1, _, _)) :: ( _, ( _, LPAREN1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
- in ((*#line 45.28 "formula.yacc"*)AST.BinExp2(AST.LPAREN, formula1, AST.RPAREN)(*#line 247.1 "formula.yacc.sml"*)
+ in ((*#line 44.28 "formula.yacc"*)AST.BinExp2(AST.LPAREN, formula1, AST.RPAREN)(*#line 247.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, LPAREN1left, RPAREN1right), rest671)
 end
 |  ( 8, ( ( _, ( MlyValue.formula formula1, _, formula1right)) :: ( _, ( _, NOT1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
- in ((*#line 46.18 "formula.yacc"*)AST.UnExp(AST.NOT, formula1)(*#line 253.1 "formula.yacc.sml"*)
+ in ((*#line 45.18 "formula.yacc"*)AST.UnExp(AST.NOT, formula1)(*#line 253.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, NOT1left, formula1right), rest671)
 end
 |  ( 9, ( ( _, ( MlyValue.formula formula2, _, formula2right)) :: _ :: ( _, ( MlyValue.formula formula1, formula1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
  val  formula2 = formula2 ()
- in ((*#line 47.26 "formula.yacc"*)AST.BinExp(formula1, AST.AND, formula2)(*#line 259.1 "formula.yacc.sml"*)
+ in ((*#line 46.26 "formula.yacc"*)AST.BinExp(formula1, AST.AND, formula2)(*#line 259.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, formula1left, formula2right), rest671)
 end
 |  ( 10, ( ( _, ( MlyValue.formula formula2, _, formula2right)) :: _ :: ( _, ( MlyValue.formula formula1, formula1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
  val  formula2 = formula2 ()
- in ((*#line 48.26 "formula.yacc"*)AST.BinExp(formula1, AST.OR, formula2)(*#line 266.1 "formula.yacc.sml"*)
+ in ((*#line 47.26 "formula.yacc"*)AST.BinExp(formula1, AST.OR, formula2)(*#line 266.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, formula1left, formula2right), rest671)
 end
 |  ( 11, ( ( _, ( MlyValue.formula formula2, _, formula2right)) :: _ :: ( _, ( MlyValue.formula formula1, formula1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
  val  formula2 = formula2 ()
- in ((*#line 49.27 "formula.yacc"*)AST.BinExp(formula1, AST.XOR, formula2)(*#line 273.1 "formula.yacc.sml"*)
+ in ((*#line 48.27 "formula.yacc"*)AST.BinExp(formula1, AST.XOR, formula2)(*#line 273.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, formula1left, formula2right), rest671)
 end
 |  ( 12, ( ( _, ( MlyValue.formula formula2, _, formula2right)) :: _ :: ( _, ( MlyValue.formula formula1, formula1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
  val  formula2 = formula2 ()
- in ((*#line 50.30 "formula.yacc"*)AST.BinExp(formula1, AST.EQUALS, formula2)(*#line 280.1 "formula.yacc.sml"*)
+ in ((*#line 49.30 "formula.yacc"*)AST.BinExp(formula1, AST.EQUALS, formula2)(*#line 280.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, formula1left, formula2right), rest671)
 end
 |  ( 13, ( ( _, ( MlyValue.formula formula2, _, formula2right)) :: _ :: ( _, ( MlyValue.formula formula1, formula1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
  val  formula2 = formula2 ()
- in ((*#line 51.30 "formula.yacc"*)AST.BinExp(formula1, AST.IMPLIES, formula2)(*#line 287.1 "formula.yacc.sml"*)
+ in ((*#line 50.30 "formula.yacc"*)AST.BinExp(formula1, AST.IMPLIES, formula2)(*#line 287.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, formula1left, formula2right), rest671)
@@ -294,7 +294,7 @@ end
 |  ( 14, ( ( _, ( MlyValue.formula formula3, _, formula3right)) :: _ :: ( _, ( MlyValue.formula formula2, _, _)) :: _ :: ( _, ( MlyValue.formula formula1, _, _)) :: ( _, ( _, IF1left, _)) :: rest671)) => let val  result = MlyValue.formula (fn _ => let val  formula1 = formula1 ()
  val  formula2 = formula2 ()
  val  formula3 = formula3 ()
- in ((*#line 52.43 "formula.yacc"*)AST.TerExp(AST.IF, formula1, AST.THEN, formula2, AST.ELSE, formula3)(*#line 294.1 "formula.yacc.sml"*)
+ in ((*#line 51.43 "formula.yacc"*)AST.TerExp(AST.IF, formula1, AST.THEN, formula2, AST.ELSE, formula3)(*#line 294.1 "formula.yacc.sml"*)
 )
 end)
  in ( LrTable.NT 0, ( result, IF1left, formula3right), rest671)

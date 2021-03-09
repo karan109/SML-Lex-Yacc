@@ -21,16 +21,7 @@ state 0:
 state 1:
 
 	START : program .  (reduce by rule 0)
-
-
-
-	.	reduce by rule 0
-
-
-state 2:
-
-	program : statement . program 
-	program : statement .  (reduce by rule 3)
+	program : program . statement 
 
 	ID	shift 8
 	CONST	shift 7
@@ -39,8 +30,16 @@ state 2:
 	LPAREN	shift 4
 
 	formula	goto 3
-	statement	goto 2
-	program	goto 9
+	statement	goto 9
+
+	.	reduce by rule 0
+
+
+state 2:
+
+	program : statement .  (reduce by rule 3)
+
+
 
 	.	reduce by rule 3
 
@@ -130,7 +129,7 @@ state 8:
 
 state 9:
 
-	program : statement program .  (reduce by rule 2)
+	program : program statement .  (reduce by rule 2)
 
 
 
@@ -437,4 +436,4 @@ state 29:
 	.	error
 
 50 of 125 action table entries left after compaction
-17 goto table entries
+16 goto table entries

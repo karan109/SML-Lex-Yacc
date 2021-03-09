@@ -1,0 +1,28 @@
+program := {statement} . 
+statement := formula TERM .
+TERM := “;” .
+formula := formula1 ELSE formula | formula3 .
+ELSE := “ELSE” .
+formula1 := formula2 THEN formula .
+THEN := “THEN” .
+formula2 := IF formula .
+IF := “IF” .
+formula3 := formula4 IMPLIES formula3 | formula4 .
+IMPLIES := “IMPLIES” .
+formula4 := formula4 AND formula5 |
+			formula4 OR formula5 |
+			formula4 XOR formula5 |
+			formula4 EQUALS formula5 |
+			formula5 .
+AND := “AND” .
+OR := “OR” .
+XOR := “XOR” .
+EQUALS := “EQUALS” .
+formula5 := NOT formula5 | formula6 .
+formula6 := LPAREN formula RPAREN | CONST | ID .
+LPAREN := “(” .
+RPAREN := “)” .
+NOT := “NOT” .
+CONST := “TRUE” | “FALSE” .
+ID := Aplha {Alpha} .
+Alpha := “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V ” | “W” | “X” | “Y ” | “Z” | “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” .

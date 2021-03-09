@@ -32,11 +32,10 @@ val axa = ref "567"
 %verbose
 
 %%
-START: program (print_program(program);print("\n\n"); SOME program)
+START: program (print("["); print_program(program);print("]\n\n"); SOME program)
       |    (NONE)
-(*START: program (SOME String.explode(program))
-  |    (NONE)*)
-program: statement program(AST.Exp4(statement, program))
+
+program: program statement(AST.Exp4(program, statement))
  | statement (AST.Exp5(statement))
 statement : formula TERM (AST.Exp3(formula, AST.TERM))
 

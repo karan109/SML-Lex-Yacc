@@ -13,7 +13,7 @@ and unop = NOT
 and terop = IF | THEN | ELSE
 datatype statement = Exp3 of exp * term
 and term = TERM
-datatype program = Exp4 of statement * program
+datatype program = Exp4 of program * statement
 | Exp5 of statement
 end
 
@@ -34,11 +34,11 @@ fun print_final(AST.BinExp(a, b, c)) =
 		(print("NOT NOT,"); print_final(b); print ("formula => NOT formula,"))
 	| print_final(AST.TerExp(a, b, c, d, e, f)) = 
 		(print("IF IF,"); print_final(b); print("THEN THEN,"); print_final(d); print("ELSE ELSE,"); print_final(f); print ("formula => IF formula THEN formula ELSE formula,"))
-	| print_final(AST.CONST(a:string)) = (print("CONST "); print(a); print(","))
-	| print_final(AST.ID(a:string)) = (print("CONST "); print(a); print(","))
+	| print_final(AST.CONST(a:string)) = (print("CONST "); print(a); print(",formula => CONST,"))
+	| print_final(AST.ID(a:string)) = (print("ID "); print(a); print(",formula => ID,"))
 
 fun print_statement(AST.Exp3(a, b)) = (print_final(a); print("TERM ;,"); print("statement => formula TERM,"))
-fun print_program(AST.Exp4(a, b)) = (print_statement(a); print_program(b); print("program => statement program,"))
+fun print_program(AST.Exp4(a, b)) = (print_program(a); print_statement(b);  print("program => program statement,"))
 	| print_program(AST.Exp5(a)) = (print_statement(a); print("program => statement,"))
 
 
