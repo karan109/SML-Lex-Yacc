@@ -1,28 +1,40 @@
 program := {statement} . 
+
 statement := formula TERM .
+
+formula := formula1 IMPLIES {NOT} IF formula THEN formula ELSE formula
+			| formula1 AND {NOT} IF formula THEN formula ELSE formula
+			| formula1 OR {NOT} IF formula THEN formula1 ELSE formula
+			| formula1 XOR {NOT} IF formula THEN formula ELSE formula
+			| formula1 EQUALS {NOT} IF formula THEN formula ELSE formula
+			| formula1
+			| {NOT} IF formula THEN formula ELSE formula .
+
+formula1 := formula2 IMPLIES formula1 | formula2 .
+
+formula2 := formula2 AND formula3
+			| formula2 OR formula3
+			| formula2 XOR formula3
+			| formula2 EQUALS formula3
+			| formula3 .
+
+formula3 := NOT formula3 | formula4 .
+
+formula4 := LPAREN formula RPAREN | CONST | ID .
+
 TERM := “;” .
-formula := formula1 ELSE formula | formula3 .
-ELSE := “ELSE” .
-formula1 := formula2 THEN formula .
-THEN := “THEN” .
-formula2 := IF formula .
-IF := “IF” .
-formula3 := formula4 IMPLIES formula3 | formula4 .
 IMPLIES := “IMPLIES” .
-formula4 := formula4 AND formula5 |
-			formula4 OR formula5 |
-			formula4 XOR formula5 |
-			formula4 EQUALS formula5 |
-			formula5 .
+IF := “IF” .
+THEN := “THEN” .
+ELSE := “ELSE” .
 AND := “AND” .
 OR := “OR” .
 XOR := “XOR” .
 EQUALS := “EQUALS” .
-formula5 := NOT formula5 | formula6 .
-formula6 := LPAREN formula RPAREN | CONST | ID .
 LPAREN := “(” .
 RPAREN := “)” .
 NOT := “NOT” .
 CONST := “TRUE” | “FALSE” .
-ID := Aplha {Alpha} .
+ID := Alpha {Alpha} .
+
 Alpha := “A” | “B” | “C” | “D” | “E” | “F” | “G” | “H” | “I” | “J” | “K” | “L” | “M” | “N” | “O” | “P” | “Q” | “R” | “S” | “T” | “U” | “V ” | “W” | “X” | “Y ” | “Z” | “a” | “b” | “c” | “d” | “e” | “f” | “g” | “h” | “i” | “j” | “k” | “l” | “m” | “n” | “o” | “p” | “q” | “r” | “s” | “t” | “u” | “v” | “w” | “x” | “y” | “z” .

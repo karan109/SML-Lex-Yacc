@@ -1,4 +1,4 @@
-(*#line 39.10 "formula.lex"*)functor CalcLexFun(structure Tokens:Calc_TOKENS)(*#line 1.1 "formula.lex.sml"*)
+(*#line 37.10 "formula.lex"*)functor CalcLexFun(structure Tokens:Calc_TOKENS)(*#line 1.1 "formula.lex.sml"*)
 =
    struct
     structure UserDeclarations =
@@ -13,7 +13,7 @@
 	type lexresult = (svalue, pos) token
 
 	val pos = ref 1
-	val col = ref 1
+	val col = ref 0
 	val exc = ref false
 	val lex_result = ref [#"["]
 
@@ -36,11 +36,9 @@
 
 	val eof = fn () => (print(process(!lex_result)); Tokens.EOF(!pos, !col))
 	val error = fn (e, l:int, col:int) => print("Unknown Token:" ^ (Int.toString l) ^ ":" ^ (Int.toString col) ^ ":" ^ e ^ "\n\n")
-	fun revfold _ nil b = b
-	| revfold f (hd::tl) b = revfold f tl (f(hd,b))
 
 	
-(*#line 43.1 "formula.lex.sml"*)
+(*#line 41.1 "formula.lex.sml"*)
 end (* end of user routines *)
 exception LexError (* raised if illegal leaf action tried *)
 structure Internal =
@@ -516,41 +514,41 @@ let fun continue() = lex() in
 
 			(* Application actions *)
 
-  1 => ((*#line 45.14 "formula.lex"*)col := 1; pos := (!pos) + 1; lex()(*#line 519.1 "formula.lex.sml"*)
+  1 => ((*#line 43.14 "formula.lex"*)col := 0; pos := (!pos) + 1; lex()(*#line 517.1 "formula.lex.sml"*)
 )
-| 15 => let val yytext=yymktext() in (*#line 48.13 "formula.lex"*)lex_result := append(rev(String.explode("CONST \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.CONST("FALSE", !pos, !col)(*#line 521.1 "formula.lex.sml"*)
+| 15 => let val yytext=yymktext() in (*#line 46.13 "formula.lex"*)lex_result := append(rev(String.explode("CONST \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.CONST("FALSE", !pos, !col)(*#line 519.1 "formula.lex.sml"*)
  end
-| 19 => let val yytext=yymktext() in (*#line 49.11 "formula.lex"*)lex_result := append(rev(String.explode("XOR \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.XOR(!pos,!col)(*#line 523.1 "formula.lex.sml"*)
+| 19 => let val yytext=yymktext() in (*#line 47.11 "formula.lex"*)lex_result := append(rev(String.explode("XOR \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.XOR(!pos,!col)(*#line 521.1 "formula.lex.sml"*)
  end
-| 23 => let val yytext=yymktext() in (*#line 50.16 "formula.lex"*)lex_result := append(rev(String.explode("AND \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.AND(!pos,!col)(*#line 525.1 "formula.lex.sml"*)
+| 23 => let val yytext=yymktext() in (*#line 48.16 "formula.lex"*)lex_result := append(rev(String.explode("AND \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.AND(!pos,!col)(*#line 523.1 "formula.lex.sml"*)
  end
-| 26 => let val yytext=yymktext() in (*#line 51.15 "formula.lex"*)lex_result := append(rev(String.explode("OR \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.OR(!pos,!col)(*#line 527.1 "formula.lex.sml"*)
+| 26 => let val yytext=yymktext() in (*#line 49.15 "formula.lex"*)lex_result := append(rev(String.explode("OR \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.OR(!pos,!col)(*#line 525.1 "formula.lex.sml"*)
  end
-| 30 => let val yytext=yymktext() in (*#line 52.16 "formula.lex"*)lex_result := append(rev(String.explode("NOT \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.NOT(!pos,!col)(*#line 529.1 "formula.lex.sml"*)
+| 30 => let val yytext=yymktext() in (*#line 50.16 "formula.lex"*)lex_result := append(rev(String.explode("NOT \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.NOT(!pos,!col)(*#line 527.1 "formula.lex.sml"*)
  end
-| 37 => let val yytext=yymktext() in (*#line 53.19 "formula.lex"*)lex_result := append(rev(String.explode("EQUALS \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.EQUALS(!pos,!col)(*#line 531.1 "formula.lex.sml"*)
+| 37 => let val yytext=yymktext() in (*#line 51.19 "formula.lex"*)lex_result := append(rev(String.explode("EQUALS \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.EQUALS(!pos,!col)(*#line 529.1 "formula.lex.sml"*)
  end
-| 4 => let val yytext=yymktext() in (*#line 46.14 "formula.lex"*)col := (!col) + String.size(yytext); lex()(*#line 533.1 "formula.lex.sml"*)
+| 4 => let val yytext=yymktext() in (*#line 44.14 "formula.lex"*)col := (!col) + String.size(yytext); lex()(*#line 531.1 "formula.lex.sml"*)
  end
-| 45 => let val yytext=yymktext() in (*#line 54.20 "formula.lex"*)lex_result := append(rev(String.explode("IMPLIES \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.IMPLIES(!pos,!col)(*#line 535.1 "formula.lex.sml"*)
+| 45 => let val yytext=yymktext() in (*#line 52.20 "formula.lex"*)lex_result := append(rev(String.explode("IMPLIES \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.IMPLIES(!pos,!col)(*#line 533.1 "formula.lex.sml"*)
  end
-| 48 => let val yytext=yymktext() in (*#line 55.15 "formula.lex"*)lex_result := append(rev(String.explode("IF \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.IF(!pos,!col)(*#line 537.1 "formula.lex.sml"*)
+| 48 => let val yytext=yymktext() in (*#line 53.15 "formula.lex"*)lex_result := append(rev(String.explode("IF \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.IF(!pos,!col)(*#line 535.1 "formula.lex.sml"*)
  end
-| 53 => let val yytext=yymktext() in (*#line 56.17 "formula.lex"*)lex_result := append(rev(String.explode("THEN \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.THEN(!pos,!col)(*#line 539.1 "formula.lex.sml"*)
+| 53 => let val yytext=yymktext() in (*#line 54.17 "formula.lex"*)lex_result := append(rev(String.explode("THEN \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.THEN(!pos,!col)(*#line 537.1 "formula.lex.sml"*)
  end
-| 58 => let val yytext=yymktext() in (*#line 57.17 "formula.lex"*)lex_result := append(rev(String.explode("ELSE \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.ELSE(!pos,!col)(*#line 541.1 "formula.lex.sml"*)
+| 58 => let val yytext=yymktext() in (*#line 55.17 "formula.lex"*)lex_result := append(rev(String.explode("ELSE \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.ELSE(!pos,!col)(*#line 539.1 "formula.lex.sml"*)
  end
-| 60 => let val yytext=yymktext() in (*#line 58.14 "formula.lex"*)lex_result := append(rev(String.explode("LPAREN \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.LPAREN(!pos,!col)(*#line 543.1 "formula.lex.sml"*)
+| 60 => let val yytext=yymktext() in (*#line 56.14 "formula.lex"*)lex_result := append(rev(String.explode("LPAREN \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.LPAREN(!pos,!col)(*#line 541.1 "formula.lex.sml"*)
  end
-| 62 => let val yytext=yymktext() in (*#line 59.14 "formula.lex"*)lex_result := append(rev(String.explode("RPAREN \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.RPAREN(!pos,!col)(*#line 545.1 "formula.lex.sml"*)
+| 62 => let val yytext=yymktext() in (*#line 57.14 "formula.lex"*)lex_result := append(rev(String.explode("RPAREN \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.RPAREN(!pos,!col)(*#line 543.1 "formula.lex.sml"*)
  end
-| 64 => let val yytext=yymktext() in (*#line 60.10 "formula.lex"*)lex_result := append(rev(String.explode("TERM \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.TERM(!pos,!col)(*#line 547.1 "formula.lex.sml"*)
+| 64 => let val yytext=yymktext() in (*#line 58.10 "formula.lex"*)lex_result := append(rev(String.explode("TERM \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.TERM(!pos,!col)(*#line 545.1 "formula.lex.sml"*)
  end
-| 67 => let val yytext=yymktext() in (*#line 61.14 "formula.lex"*)lex_result := append(rev(String.explode("ID \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.ID(yytext,!pos,!col)(*#line 549.1 "formula.lex.sml"*)
+| 67 => let val yytext=yymktext() in (*#line 59.14 "formula.lex"*)lex_result := append(rev(String.explode("ID \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.ID(yytext,!pos,!col)(*#line 547.1 "formula.lex.sml"*)
  end
-| 69 => let val yytext=yymktext() in (*#line 62.15 "formula.lex"*)exc := false; error (yytext,!pos, !col); col := (!col) + String.size(yytext); lex()(*#line 551.1 "formula.lex.sml"*)
+| 69 => let val yytext=yymktext() in (*#line 60.15 "formula.lex"*)exc := false; col := (!col) + String.size(yytext); error (yytext,!pos, !col); lex()(*#line 549.1 "formula.lex.sml"*)
  end
-| 9 => let val yytext=yymktext() in (*#line 47.12 "formula.lex"*)lex_result := append(rev(String.explode("CONST \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.CONST("TRUE", !pos, !col)(*#line 553.1 "formula.lex.sml"*)
+| 9 => let val yytext=yymktext() in (*#line 45.12 "formula.lex"*)lex_result := append(rev(String.explode("CONST \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.CONST("TRUE", !pos, !col)(*#line 551.1 "formula.lex.sml"*)
  end
 | _ => raise Internal.LexerError
 

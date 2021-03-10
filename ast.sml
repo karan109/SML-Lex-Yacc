@@ -1,4 +1,3 @@
-(* ast.sml *)
 structure AST =
 struct
 datatype exp = CONST of string

@@ -8,7 +8,7 @@ structure Tokens= Tokens
 	type lexresult = (svalue, pos) token
 
 	val pos = ref 1
-	val col = ref 1
+	val col = ref 0
 	val exc = ref false
 	val lex_result = ref [#"["]
 
@@ -31,8 +31,6 @@ structure Tokens= Tokens
 
 	val eof = fn () => (print(process(!lex_result)); Tokens.EOF(!pos, !col))
 	val error = fn (e, l:int, col:int) => print("Unknown Token:" ^ (Int.toString l) ^ ":" ^ (Int.toString col) ^ ":" ^ e ^ "\n\n")
-	fun revfold _ nil b = b
-	| revfold f (hd::tl) b = revfold f tl (f(hd,b))
 
 	
 %%
@@ -42,7 +40,7 @@ alpha=[A-Za-z];
 ws = [\ \t];
 all = .;
 %%
-\n       => (col := 1; pos := (!pos) + 1; lex());
+\n       => (col := 0; pos := (!pos) + 1; lex());
 {ws}+    => (col := (!col) + String.size(yytext); lex());
 "TRUE"	=> (lex_result := append(rev(String.explode("CONST \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.CONST("TRUE", !pos, !col));
 "FALSE"	=> (lex_result := append(rev(String.explode("CONST \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.CONST("FALSE", !pos, !col));
@@ -59,5 +57,5 @@ all = .;
 ")"      => (lex_result := append(rev(String.explode("RPAREN \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.RPAREN(!pos,!col));
 ";"		=> (lex_result := append(rev(String.explode("TERM \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.TERM(!pos,!col));
 {alpha}+ => (lex_result := append(rev(String.explode("ID \""^yytext^"\", ")), (!lex_result)); col := (!col) + String.size(yytext); Tokens.ID(yytext,!pos,!col));
-{all}     => (exc := false; error (yytext,!pos, !col); col := (!col) + String.size(yytext); lex());
+{all}     => (exc := false; col := (!col) + String.size(yytext); error (yytext,!pos, !col); lex());
 

@@ -1,7 +1,9 @@
 val error = ref false
-val error_list = ref ""
+val error_list = ref("":string)
+
 fun head([]) = ""
     | head((x:string)::ls) = x
+
 structure CalcLrVals = CalcLrValsFun(structure Token = LrParser.Token)
 structure CalcLex = CalcLexFun(structure Tokens = CalcLrVals.Tokens);
 structure CalcParser =
@@ -11,8 +13,7 @@ structure CalcParser =
      
 fun invoke lexstream =
     	     	let fun print_error (s,pos:int,col:int) =
-		    	(print("Syntax Error:" ^ (Int.toString pos) ^ ":" ^ (Int.toString col) ^ ":" ^ s ^ "\n\n");
-                error_list := ("Syntax Error:" ^ (Int.toString pos) ^ ":" ^ (Int.toString col) ^ ":" ^ s ^ "\n\n")^(!error_list))
+		    	(error_list := (!error_list)^("Syntax Error:" ^ (Int.toString pos) ^ ":" ^ (Int.toString col) ^ ":" ^ s ^ "\n\n"))
 		in
 		    (error := true; CalcParser.parse(0,lexstream,print_error,()))
 		end
@@ -31,11 +32,10 @@ fun parse (lexer) =
 	val (nextToken, lexer) = CalcParser.Stream.get lexer
     in
         if CalcParser.sameToken(nextToken, dummyEOF) then 
-            if (!error) = false then result 
-            else (print(!error_list); result)
- 	else (print("Warning: Unconsumed input \n"); result)
-    handle CalcParser.ParseError => (print("Warning: Unconsumed input \n"); result)
+            print("")
+ 	  else print("Warning: Unconsumed input \n")
     end
+    handle ParseError => print(!error_list)
 
 val file_name = TextIO.openIn (head(CommandLine.arguments()));
 val input_str = TextIO.inputAll file_name;
